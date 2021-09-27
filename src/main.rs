@@ -28,8 +28,8 @@ fn main() {
     let hashes_total: i64 = args.value_of("hashes").unwrap().parse().expect("Hashes is not a number!");
     let hashes_per_thread: i64 = hashes_total/threads;
     println!("Amount of threads detected: {}", threads);
-    println!("This program will do {} hashes", threads*hashes_total);
-    println!("Each program will hash {} hashes!", hashes_per_thread);
+    println!("This program will do {} hashes", hashes_total);
+    println!("Each thread will hash {} hashes!", hashes_per_thread);
     println!("Running the benchmark.");
     while threads != 0 {
         let sen_clone = sender.clone();
