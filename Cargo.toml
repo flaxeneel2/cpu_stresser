@@ -1,0 +1,11 @@
+[package]
+name = "cpu_stresser"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+sha2 = "0.9.8"
+sysinfo = "0.20.3"
+clap = "3.0.0-beta.4"
