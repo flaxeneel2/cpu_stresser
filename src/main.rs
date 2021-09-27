@@ -24,12 +24,13 @@ fn main() {
             .takes_value(true)
             .default_value("100000000"))
         .get_matches();
-    let mut threads: i32 = args.value_of("threads").unwrap().parse().expect("Threads is not a number!");
-    let hashes_total: i32 = args.value_of("hashes").unwrap().parse().expect("Hashes is not a number!");
-    let hashes_per_thread: i32 = hashes_total/threads;
+    let mut threads: i64 = args.value_of("threads").unwrap().parse().expect("Threads is not a number!");
+    let hashes_total: i64 = args.value_of("hashes").unwrap().parse().expect("Hashes is not a number!");
+    let hashes_per_thread: i64 = hashes_total/threads;
     println!("Amount of threads detected: {}", threads);
     println!("This program will do {} hashes", threads*hashes_total);
     println!("Each program will hash {} hashes!", hashes_per_thread);
+    println!("Running the benchmark.");
     while threads != 0 {
         let sen_clone = sender.clone();
         let runs = hashes_per_thread;
@@ -59,12 +60,12 @@ fn main() {
     println!("time taken: {}", dur);
 }
 
-fn thread_function(senderr: std::sync::mpsc::Sender<String>, mut runs: i32, id: i32) {
+fn thread_function(senderr: std::sync::mpsc::Sender<String>, mut runs: i64, id: i64) {
     while runs != 0 {
         let mut sha_hash = Sha512::new();
         sha_hash.update(std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).expect("bruh").as_nanos().to_string());
         let _hash = sha_hash.finalize();
         runs -= 1;
     }
-    senderr.send(String::from("finished|") + &*id.to_string()).unwrap();
+    senderr.send(format!("finished|{}", id)).unwrap();
 }
